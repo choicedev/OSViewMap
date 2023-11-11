@@ -1,0 +1,267 @@
+
+ext {
+    GRADLE = '7.4.1'
+    KOTLIN = "1.8.0"
+    GOOGLE_FIREBASE = "4.3.13"
+    def COROUTINES_KT = "1.3.3"
+
+
+    def LIFECYCLE = '2.2.0'
+    def LIFECYCLE_2 = '2.5.1'
+
+    def DATASTORE = '1.0.0'
+    def CORE = '1.8.0'
+    def RETROFIT = '2.9.0'
+    def OKHTTP = '4.10.0'
+    def GSON = '2.9.0'
+
+    def WORKER_VERSION = '2.8.0'
+
+    DAGGER = '2.45'
+    def DAGGER_COMPILER = '1.0.0'
+    def DAGGER_NAVIGATION = '1.0.0'
+    def HILT_WORK = '1.0.0'
+
+    def ROOM = '2.5.0'
+
+    COMPOSE = '1.3.3'
+    COMPOSE_ICON = '1.2.1'
+    COMPOSE_TEST = '1.2.1'
+    def COIL = '2.2.2'
+    MATERIAL3 = '1.0.1'
+    COMPOSE_COMPILER = '1.4.0'
+    def ACCOMPANIST = '0.28.0'
+    def COMPOSE_RUNTIME = '1.3.3'
+    def COMPOSE_ANIMATION = '1.3.3'
+    def COMPOSE_FOUNDATION = '1.3.1'
+    def ACTIVITY = '1.6.1'
+    def COMPOSE_NAVIGATION = '2.5.3'
+
+
+    //FIREBASE
+    def MESSAGING = '23.1.1'
+    def CRASHLYTICS = '18.2.9'
+    def ANALYTICS = '20.1.2'
+
+    //TESTING
+    def JUNIT = '4.13.2'
+    def EXT_JUNIT = '1.1.1'
+    def EXPRESSO = '3.2.0'
+    def MOCKITO = '3.2.0'
+    def MOCKITO_INLINE = '3.11.2'
+    def TURBINE = '0.7.0'
+    def COROUTINE_KT_TEST = '1.6.4'
+    def TRUTH = '1.1.3'
+    def MOCK_WEBSERVICE = '4.9.3'
+    def TEST_CORE = '2.1.0'
+
+
+
+
+
+    def jetpackCompose = [
+            composeUI:                  [group: 'androidx.compose.ui',              name: 'ui',                                     version:COMPOSE],
+            tooling:                    [group: 'androidx.compose.ui',              name: 'ui-tooling',                             version:COMPOSE],
+            foundation:                 [group: 'androidx.compose.foundation',      name: 'foundation',                             version:COMPOSE_FOUNDATION],
+            animation:                  [group: 'androidx.compose.animation',       name: 'animation',                              version:COMPOSE_ANIMATION],
+            material:                   [group: 'androidx.compose.material3',       name: 'material3',                              version:MATERIAL3],
+            material_icons_core:        [group: 'androidx.compose.material',        name: 'material-icons-core',                    version:COMPOSE_ICON],
+            material_icons_extended:    [group: 'androidx.compose.material',        name: 'material-icons-extended',                version:COMPOSE_ICON],
+            livedata:                   [group: 'androidx.compose.runtime',         name: 'runtime-livedata',                       version:COMPOSE_ICON],
+            runtime:                    [group: 'androidx.compose.runtime',         name: 'runtime',                                version:COMPOSE_RUNTIME],
+            activity:                   [group: 'androidx.activity',                name: 'activity-compose',                       version:ACTIVITY],
+            compiler:                   [group: 'androidx.compose.compiler',        name: 'compiler',                               version:COMPOSE_COMPILER],
+            jUnitTest:                  [group: 'androidx.compose.ui',              name: 'ui-test-junit4',                         version:COMPOSE_TEST],
+            manifest:                   [group: 'androidx.compose.ui',              name: 'ui-test-manifest',                       version:COMPOSE_TEST],
+            navFragment:                [group: 'androidx.navigation',              name: 'navigation-fragment-ktx',                version:COMPOSE_NAVIGATION],
+            navFragmentKtx:             [group: 'androidx.navigation',              name: 'navigation-ui-ktx',                      version:COMPOSE_NAVIGATION],
+            navigation:                 [group: 'androidx.navigation',              name: 'navigation-compose',                     version:COMPOSE_NAVIGATION],
+            navModules:                 [group: 'androidx.navigation',              name: 'navigation-dynamic-features-fragment',   version:COMPOSE_NAVIGATION],
+            viewModelCompose:           [group: 'androidx.lifecycle',               name: 'lifecycle-viewmodel-compose',            version:LIFECYCLE_2],
+            coil:                       [group: 'io.coil-kt',                       name: 'coil-compose',                           version:COIL],
+    ]
+
+    def accompanist = [
+            systemUI:                   [group: 'com.google.accompanist',           name: 'accompanist-systemuicontroller',          version:ACCOMPANIST],
+            insetsUI:                   [group: 'com.google.accompanist',           name: 'accompanist-insets-ui',                   version:ACCOMPANIST],
+            insets:                     [group: 'com.google.accompanist',           name: 'accompanist-insets',                      version:ACCOMPANIST],
+            navigationAnimation:        [group: 'com.google.accompanist',           name: 'accompanist-navigation-animation',        version:ACCOMPANIST],
+            navigation:                 [group: 'com.google.accompanist',           name: 'accompanist-navigation-material',         version:ACCOMPANIST],
+            placeMaterial:              [group: 'com.google.accompanist',           name: 'accompanist-placeholder-material',        version:ACCOMPANIST],
+            placeHolder:                [group: 'com.google.accompanist',           name: 'accompanist-placeholder',                 version:ACCOMPANIST],
+            swipeRefresh:               [group: 'com.google.accompanist',           name: 'accompanist-swiperefresh',                version:ACCOMPANIST],
+    ]
+
+
+    def firebase = [
+            messaging:              [group: 'com.google.firebase',           name: 'firebase-messaging-ktx',                         version:MESSAGING],
+            crashlytics:            [group: 'com.google.firebase',           name: 'firebase-crashlytics-ktx',                       version:CRASHLYTICS],
+            analytics:              [group: 'com.google.firebase',           name: 'firebase-analytics-ktx',                          version:ANALYTICS],
+    ]
+
+    def lifeCycler = [
+            lifecycleExtension:       [group: 'androidx.lifecycle',           name: 'lifecycle-extensions',                         version:LIFECYCLE],
+            liveDataKtx:              [group: 'androidx.lifecycle',           name: 'lifecycle-livedata-ktx',                       version:LIFECYCLE_2],
+            savedState:               [group: 'androidx.lifecycle',           name: 'lifecycle-viewmodel-savedstate',               version:LIFECYCLE_2],
+    ]
+
+    def libraries = [
+            dataStore:                  [group: 'androidx.datastore',           name: 'datastore-preferences',         version:DATASTORE],
+            dataStore_core:             [group: 'androidx.datastore',           name: 'datastore-preferences-core',         version:DATASTORE],
+            coreKtx:                    [group: 'androidx.core',                name: 'core-ktx',                      version:CORE],
+            workers:                    [group: 'androidx.work',                name: 'work-runtime-ktx',              version:WORKER_VERSION],
+    ]
+
+    def unitTesting= [
+            jUnitTest:                [group: 'junit',                          name: 'junit',                      version:JUNIT],
+            mockitoKotlin:            [group: 'org.mockito.kotlin',             name: 'mockito-kotlin',             version:MOCKITO],
+            mockito:                  [group: 'org.mockito',                    name: 'mockito-inline',             version:MOCKITO_INLINE],
+            turbine:                  [group: 'app.cash.turbine',               name: 'turbine',                    version:TURBINE],
+            coroutinesKotlinTest:     [group: 'org.jetbrains.kotlinx',          name: 'kotlinx-coroutines-test',    version:COROUTINE_KT_TEST],
+            mockWebServer:            [group: 'com.squareup.okhttp3',           name: 'mockwebserver',              version:MOCK_WEBSERVICE],
+            truth:                    [group: 'com.google.truth',               name: 'truth',                      version:TRUTH],
+            coreTesting:              [group: 'androidx.arch.core',             name: 'core-testing',               version:TEST_CORE],
+            extJUnit:                 [group: 'androidx.test.ext',              name: 'junit',                      version:EXT_JUNIT],
+            espressoCore:             [group: 'androidx.test.espresso',         name: 'espresso-core',              version:EXPRESSO],
+    ]
+
+    def hilt_dagger = [
+            main:                  [group: 'com.google.dagger',       name: 'hilt-android',                 version:DAGGER],
+            androidCompiler:       [group: 'com.google.dagger',       name: 'hilt-android-compiler',        version:DAGGER],
+            compiler:              [group: 'androidx.hilt',           name: 'hilt-compiler',                version:DAGGER_COMPILER],
+            navigation:            [group: 'androidx.hilt',           name: 'hilt-navigation-compose',      version:DAGGER_NAVIGATION],
+            work:                  [group: 'androidx.hilt',           name: 'hilt-work',                    version:HILT_WORK],
+    ]
+
+    def database = [
+            room:                       [group: 'androidx.room',       name: 'room-runtime',                 version:ROOM],
+            roomCompiler:               [group: 'androidx.room',       name: 'room-compiler',                version:ROOM],
+            roomKtx:                    [group: 'androidx.room',       name: 'room-ktx',                     version:ROOM],
+            roomCommon:                 [group: 'androidx.room',       name: 'room-common',                  version:ROOM],
+    ]
+
+    def kotlinLibrary = [
+            stdlib:                 [group: 'org.jetbrains.kotlin',       name: 'kotlin-stdlib',                          version:KOTLIN],
+            coroutines:             [group: 'org.jetbrains.kotlinx',      name: 'kotlinx-coroutines-play-services',       version:COROUTINES_KT],
+    ]
+
+    def networking = [
+            retrofit:                   [group: 'com.squareup.retrofit2',       name: 'retrofit',               version:RETROFIT],
+            gsonConverter:                       [group: 'com.squareup.retrofit2',       name: 'converter-gson',         version:RETROFIT],
+            okHttp:                     [group: 'com.squareup.okhttp3',         name: 'logging-interceptor',    version:OKHTTP],
+            gson:                       [group: 'com.google.code.gson',         name: 'gson',    version:GSON],
+    ]
+
+
+
+
+    kotlinLibImp = [
+            [configuration: "implementation", dependency: kotlinLibrary.stdlib],
+            [configuration: "implementation", dependency: kotlinLibrary.coroutines],
+            [configuration: "implementation", dependency: libraries.coreKtx]
+    ]
+
+    daggerNoAndroidImp = [
+            [configuration: "implementation",   dependency: hilt_dagger.main],
+            [configuration: "kapt",             dependency: hilt_dagger.compiler],
+    ]
+
+    daggerAndroidImp = [
+            [configuration: "implementation", dependency: hilt_dagger.main],
+            [configuration: "kapt", dependency: hilt_dagger.androidCompiler],
+            [configuration: "implementation", dependency: hilt_dagger.navigation],
+            [configuration: "implementation", dependency: hilt_dagger.work],
+            [configuration: "kapt", dependency: hilt_dagger.compiler],
+    ]
+
+    roomImp = [
+            [configuration: "implementation",   dependency: database.room],
+            [configuration: "implementation",   dependency: database.roomKtx],
+            [configuration: "implementation",   dependency: database.roomCommon],
+            [configuration: "kapt",             dependency: database.roomCompiler],
+    ]
+
+    firebaseImp = [
+            [configuration: "implementation",   dependency: firebase.messaging],
+            [configuration: "implementation",   dependency: firebase.crashlytics],
+            [configuration: "implementation",   dependency: firebase.analytics],
+    ]
+
+
+    jetpackComposeImp = [
+            [configuration: "api", dependency: jetpackCompose.composeUI],
+            [configuration: "api", dependency: jetpackCompose.foundation],
+            [configuration: "api", dependency: jetpackCompose.animation],
+            [configuration: "api", dependency: jetpackCompose.material],
+            [configuration: "api", dependency: jetpackCompose.material_icons_core],
+            [configuration: "api", dependency: jetpackCompose.material_icons_extended],
+            [configuration: "api", dependency: jetpackCompose.livedata],
+            [configuration: "api", dependency: jetpackCompose.navigation],
+            [configuration: "api", dependency: jetpackCompose.runtime],
+            [configuration: "androidTestImplementation", dependency: jetpackCompose.jUnitTest],
+            [configuration: "debugImplementation", dependency: jetpackCompose.tooling],
+            [configuration: "debugImplementation", dependency: jetpackCompose.manifest],
+            [configuration: "implementation", dependency: jetpackCompose.activity],
+            [configuration: "implementation", dependency: jetpackCompose.compiler],
+            [configuration: "implementation", dependency: jetpackCompose.navFragment],
+            [configuration: "implementation", dependency: jetpackCompose.navFragmentKtx],
+            [configuration: "implementation", dependency: jetpackCompose.navModules],
+            [configuration: "implementation", dependency: jetpackCompose.viewModelCompose],
+            [configuration: "implementation", dependency: jetpackCompose.coil],
+    ]
+
+    retrofitImp = [
+            [configuration: "api", dependency: networking.retrofit],
+            [configuration: "api", dependency: networking.gsonConverter],
+            [configuration: "api", dependency: networking.okHttp],
+            [configuration: "api", dependency: networking.gson],
+    ]
+
+    workerImp = [
+            [configuration: "api", dependency: libraries.workers],
+    ]
+
+    accompanistImp = [
+            [configuration: "implementation", dependency: accompanist.navigation],
+            [configuration: "implementation", dependency: accompanist.insets],
+            [configuration: "implementation", dependency: accompanist.insetsUI],
+            [configuration: "implementation", dependency: accompanist.navigationAnimation],
+            [configuration: "implementation", dependency: accompanist.placeHolder],
+            [configuration: "implementation", dependency: accompanist.swipeRefresh],
+            [configuration: "implementation", dependency: accompanist.placeMaterial],
+            [configuration: "implementation", dependency: accompanist.systemUI]
+    ]
+
+    dataStoreImp = [
+            [configuration: "implementation", dependency: libraries.dataStore],
+            [configuration: "implementation", dependency: libraries.dataStore_core]
+    ]
+
+    lifeCycleImp = [
+            [configuration: "implementation", dependency: lifeCycler.lifecycleExtension],
+            [configuration: "implementation", dependency: lifeCycler.liveDataKtx],
+            [configuration: "implementation", dependency: lifeCycler.savedState]
+    ]
+
+    //nao utilizado
+    testingHandler = [
+            [configuration: "testImplementation", dependency: unitTesting.coroutinesKotlinTest],
+            [configuration: "testImplementation", dependency: unitTesting.coreTesting],
+            [configuration: "testImplementation", dependency: unitTesting.jUnitTest],
+            [configuration: "testImplementation", dependency: unitTesting.mockito],
+            [configuration: "testImplementation", dependency: unitTesting.mockitoKotlin],
+            [configuration: "testImplementation", dependency: unitTesting.mockWebServer],
+            [configuration: "testImplementation", dependency: unitTesting.truth],
+            [configuration: "testImplementation", dependency: unitTesting.turbine],
+    ]
+
+//nao utilizado
+    androidTest = [
+            [configuration: "androidTestImplementation", dependency: unitTesting.extJUnit],
+            [configuration: "androidTestImplementation", dependency: unitTesting.espressoCore],
+    ]
+
+
+
+
+}

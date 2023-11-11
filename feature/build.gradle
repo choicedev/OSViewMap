@@ -1,0 +1,70 @@
+daggerPlugins.forEach{
+    apply plugin: it
+}
+
+android {
+    compileSdk compileAppSdk
+    namespace 'com.choice.feature'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion COMPOSE_COMPILER
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+kapt {
+    correctErrorTypes = true
+}
+dependencies {
+
+    kotlinLibImp.forEach{
+        add(it.configuration, it.dependency)
+    }
+
+    jetpackComposeImp.forEach{
+        add(it.configuration, it.dependency)
+    }
+
+    daggerAndroidImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    dataStoreImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    roomImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    retrofitImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    workerImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    accompanistImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    testingHandler.forEach {
+        add(it.configuration, it.dependency)
+    }
+}

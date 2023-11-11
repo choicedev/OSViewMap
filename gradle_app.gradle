@@ -1,0 +1,12 @@
+ext {
+    compileMinSdk = 26
+    compileAppSdk = 33
+    compileTargetSdk = 33
+    appVersionCode = 24
+    appCode = "OSViewTracker"
+    appVersionName = "0.0.1"
+    main_package = "com.choice.map"
+    androidTestInstrumentation = "androidx.test.runner.AndroidJUnitRunner"
+    proguardConsumerRules =  "consumer-rules.pro"
+    dimension = "environment"
+}

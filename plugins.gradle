@@ -1,0 +1,29 @@
+ext {
+    defaultPlugins = [
+            'com.android.application',
+            'kotlin-android',
+            'kotlin-kapt'
+    ]
+
+    libPlugins = [
+            'kotlin-android',
+            'kotlin-kapt',
+            'com.android.library'
+    ]
+
+    daggerPlugins = [
+            'kotlin-android',
+            'kotlin-kapt',
+            'com.android.library',
+            'dagger.hilt.android.plugin',
+    ]
+
+
+
+    applicationPlugns = [
+            'com.android.application',
+            'kotlin-android',
+            'kotlin-kapt',
+            'dagger.hilt.android.plugin',
+    ]
+}

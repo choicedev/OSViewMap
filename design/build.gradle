@@ -1,0 +1,63 @@
+libPlugins.forEach{
+    apply plugin: it
+}
+
+android {
+    compileSdk compileAppSdk
+    namespace 'com.choice.design'
+
+    buildTypes {
+        debug {
+            debuggable true
+            buildConfigField "String", "APP_NAME", "OSViewTracker"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            buildConfigField "String", "APP_NAME", "OSViewTracker"
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion COMPOSE_COMPILER
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+kapt {
+    correctErrorTypes = true
+}
+dependencies {
+
+    implementation("org.osmdroid:osmdroid-android:6.1.16")
+
+    kotlinLibImp.forEach{
+        add(it.configuration, it.dependency)
+    }
+
+    jetpackComposeImp.forEach{
+        add(it.configuration, it.dependency)
+    }
+
+    accompanistImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+}

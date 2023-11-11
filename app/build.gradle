@@ -1,0 +1,117 @@
+applicationPlugns.forEach{
+    apply plugin: it
+}
+
+android {
+    compileSdk compileAppSdk
+    namespace main_package
+    defaultConfig {
+        applicationId main_package
+        minSdk compileMinSdk
+        targetSdk compileTargetSdk
+        versionCode appVersionCode
+        versionName appVersionName
+
+        testInstrumentationRunner androidTestInstrumentation
+        signingConfig signingConfigs.debug
+
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            buildConfigField "String", "APP_NAME", "OSViewTracker"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            buildConfigField "String", "APP_NAME", "OSViewTracker"
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+
+        production {
+            applicationId "com.choice.osviewtracker"
+        }
+
+        development {
+            applicationId "com.choice.map"
+        }
+    }
+
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion COMPOSE_COMPILER
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+kapt {
+    correctErrorTypes = true
+}
+dependencies {
+
+    implementation("org.osmdroid:osmdroid-android:6.1.16")
+
+    implementation project(path: ':design')
+    implementation project(path: ':feature')
+    implementation project(path: ':feature:splash')
+    implementation project(path: ':feature:map')
+
+    kotlinLibImp.forEach{
+        add(it.configuration, it.dependency)
+    }
+
+    jetpackComposeImp.forEach{
+        add(it.configuration, it.dependency)
+    }
+
+    daggerAndroidImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    dataStoreImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    roomImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    retrofitImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    workerImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    accompanistImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    testingHandler.forEach {
+        add(it.configuration, it.dependency)
+    }
+}

@@ -1,0 +1,61 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    apply from: 'library.gradle'
+    apply from: 'plugins.gradle'
+    apply from: 'gradle_app.gradle'
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+
+        classpath "com.android.tools.build:gradle:$GRADLE"
+        /*classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$DAGGER"
+        classpath "com.google.gms:google-services:$GOOGLE_FIREBASE"*/
+
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.android' version "$KOTLIN" apply false
+    id 'com.google.dagger.hilt.android' version "$DAGGER" apply false
+    id 'com.android.application' version "$GRADLE" apply false
+    id 'com.android.library' version "$GRADLE" apply false
+
+}
+
+
+allprojects {
+    tasks.withType(KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs += [
+                    "-opt-in=kotlin.ExperimentalUnsignedTypes",
+                    "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                    "-opt-in=kotlin.time.ExperimentalTime",
+                    "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
+                    "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                    "-opt-in=androidx.compose.ExperimentalComposeApi",
+                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+                    "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",
+                    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                    "-opt-in=coil.annotation.ExperimentalCoilApi",
+                    "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+                    "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
+                    "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                    "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                    "-Xopt-in=coil.annotation.ExperimentalCoilApi"
+            ]
+        }
+    }
+}
+
+tasks.register('clean', Delete) {
+    delete rootProject.buildDir
+}
