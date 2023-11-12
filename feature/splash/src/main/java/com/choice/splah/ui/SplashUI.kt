@@ -25,6 +25,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.choice.design.component.MapScaffold
 import com.choice.design.theme.MapTheme
+import com.choice.feature.navigation.Destination
 import com.choice.splah.SplashViewModel
 import com.choice.splash.BuildConfig
 import com.choice.splash.R
@@ -40,10 +41,8 @@ fun SplashUI(navHostController: NavHostController) {
     LaunchedEffect(key1 = Unit){
         delay(300)
         visible = !visible
-    }
-
-    var isSuccess by remember {
-        mutableStateOf(false)
+        delay(1000)
+        viewModel.navigateTo(Destination.MapScreen.fullRoute)
     }
 
     MapScaffold(

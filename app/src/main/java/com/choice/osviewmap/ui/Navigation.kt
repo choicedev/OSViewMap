@@ -3,6 +3,7 @@ package com.choice.osviewmap.ui
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import com.choice.feature.compose.MapNavHost
+import com.choice.map.navigation.mapComposable
 import com.choice.splah.navigation.splashComposable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
@@ -15,5 +16,6 @@ fun MapNavigationHost(systemColor: ColorScheme) {
         navController = navController,
     ) {
         splashComposable(navController)
+        mapComposable(navController)
     }
 }

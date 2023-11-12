@@ -33,6 +33,13 @@ kapt {
 }
 dependencies {
 
+    implementation project(path: ':design')
+    implementation project(path: ':feature')
+
+    openStreetMapImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
     kotlinLibImp.forEach{
         add(it.configuration, it.dependency)
     }
