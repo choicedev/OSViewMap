@@ -37,12 +37,12 @@ fun rememberMapView(): MapView {
     val context = LocalContext.current
     val mapView = remember {
         MapView(context).apply {
-            id = R.id.map_layout
+            setTileSource(TileSourceFactory.MAPNIK)
+            setMultiTouchControls(true)
+            maxZoomLevel = 20.0
+            minZoomLevel = 5.0
         }
     }
-
-    mapView.setTileSource(TileSourceFactory.MAPNIK)
-    mapView.setMultiTouchControls(true)
 
     val lifecycleObserver = rememberMapLifecycleObserver(mapView)
     val lifecycle = LocalLifecycleOwner.current.lifecycle
