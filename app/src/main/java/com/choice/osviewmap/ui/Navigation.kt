@@ -12,10 +12,15 @@ fun MapNavigationHost(systemColor: ColorScheme) {
 
     val navController = rememberAnimatedNavController()
 
+
+
     MapNavHost(
         navController = navController,
     ) {
         splashComposable(navController)
         mapComposable(navController)
     }
+
+
+
 }

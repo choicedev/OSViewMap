@@ -42,6 +42,7 @@ fun rememberMapView(): MapView {
     }
 
     mapView.setTileSource(TileSourceFactory.MAPNIK)
+    mapView.setMultiTouchControls(true)
 
     val lifecycleObserver = rememberMapLifecycleObserver(mapView)
     val lifecycle = LocalLifecycleOwner.current.lifecycle

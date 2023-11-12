@@ -41,7 +41,7 @@ fun SplashUI(navHostController: NavHostController) {
     LaunchedEffect(key1 = Unit){
         delay(300)
         visible = !visible
-        delay(1000)
+        delay(3000)
         viewModel.navigateTo(Destination.MapScreen.fullRoute)
     }
 
