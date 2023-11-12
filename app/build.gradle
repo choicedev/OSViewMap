@@ -20,13 +20,11 @@ android {
     buildTypes {
         debug {
             debuggable true
-            buildConfigField "String", "APP_NAME", "OSViewTracker"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
-            buildConfigField "String", "APP_NAME", "OSViewTracker"
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

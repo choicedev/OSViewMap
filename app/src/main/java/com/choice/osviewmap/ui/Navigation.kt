@@ -7,7 +7,7 @@ import com.choice.splah.navigation.splashComposable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
 @Composable
-fun NavHost(systemColor: ColorScheme) {
+fun MapNavigationHost(systemColor: ColorScheme) {
 
     val navController = rememberAnimatedNavController()
 

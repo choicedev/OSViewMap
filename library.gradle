@@ -210,6 +210,7 @@ ext {
             [configuration: "implementation", dependency: jetpackCompose.navModules],
             [configuration: "implementation", dependency: jetpackCompose.viewModelCompose],
             [configuration: "implementation", dependency: jetpackCompose.coil],
+            [configuration: "implementation", dependency: jetpackCompose.lottie],
     ]
 
     retrofitImp = [

@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             ApplicationTheme {
-
+                MapNavigationHost(systemColor = it)
             }
         }
     }
