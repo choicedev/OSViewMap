@@ -36,6 +36,7 @@ ext {
     def COMPOSE_FOUNDATION = '1.3.1'
     def ACTIVITY = '1.6.1'
     def COMPOSE_NAVIGATION = '2.5.3'
+    def LOTTIE = '6.0.1'
 
 
     //FIREBASE
@@ -84,6 +85,7 @@ ext {
             navModules:                 [group: 'androidx.navigation',              name: 'navigation-dynamic-features-fragment',   version:COMPOSE_NAVIGATION],
             viewModelCompose:           [group: 'androidx.lifecycle',               name: 'lifecycle-viewmodel-compose',            version:LIFECYCLE_2],
             coil:                       [group: 'io.coil-kt',                       name: 'coil-compose',                           version:COIL],
+            lottie:                     [group: 'com.airbnb.android',               name: 'lottie-compose',                         version:LOTTIE],
     ]
 
     def accompanist = [
@@ -214,6 +216,7 @@ ext {
             [configuration: "implementation", dependency: jetpackCompose.navModules],
             [configuration: "implementation", dependency: jetpackCompose.viewModelCompose],
             [configuration: "implementation", dependency: jetpackCompose.coil],
+            [configuration: "implementation", dependency: jetpackCompose.lottie],
     ]
 
     retrofitImp = [

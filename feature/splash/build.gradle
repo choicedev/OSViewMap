@@ -1,23 +1,24 @@
-applicationPlugns.forEach{
+daggerPlugins.forEach{
     apply plugin: it
 }
 
+
+
 android {
     compileSdk compileAppSdk
-    namespace "com.choice.splash"
+    namespace 'com.choice.splash'
 
     buildTypes {
         debug {
+            buildConfigField "String", "APP_NAME", "\"StreetMap\""
             debuggable true
-            buildConfigField "String", "APP_NAME", "OSViewTracker"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
-            buildConfigField "String", "APP_NAME", "OSViewTracker"
+            buildConfigField "String", "APP_NAME", "\"StreetMap\""
             minifyEnabled true
-            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -49,6 +50,8 @@ kapt {
 dependencies {
 
     implementation project(path: ':feature')
+    implementation project(path: ':design')
+
     kotlinLibImp.forEach{
         add(it.configuration, it.dependency)
     }
