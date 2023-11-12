@@ -113,6 +113,7 @@ fun ApplicationTheme(
 
     ApplicationComposition {
         MaterialTheme(
+            typography = MapTypography,
             colorScheme = LightColors,
             shapes = MapTheme.shapes,
             content = { content(LightColors) })

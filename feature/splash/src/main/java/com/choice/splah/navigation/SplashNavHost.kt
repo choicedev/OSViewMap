@@ -12,6 +12,6 @@ fun NavGraphBuilder.splashComposable(
     applicationComposable(
         destination = Destination.SplashScreen,
     ) {
-        SplashUI()
+        SplashUI(navController)
     }
 }

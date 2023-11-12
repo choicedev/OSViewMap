@@ -10,12 +10,14 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField "String", "APP_NAME", "\"StreetMap\""
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
+            buildConfigField "String", "APP_NAME", "\"StreetMap\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
