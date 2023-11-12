@@ -49,6 +49,7 @@ kapt {
 dependencies {
 
     implementation project(path: ':feature')
+
     kotlinLibImp.forEach{
         add(it.configuration, it.dependency)
     }
