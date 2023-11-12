@@ -55,9 +55,14 @@ ext {
     def MOCK_WEBSERVICE = '4.9.3'
     def TEST_CORE = '2.1.0'
 
+    //OpenStreetMap
+    def OSM = '6.1.16'
 
 
 
+    def openStreetMap = [
+            map:                        [group: 'org.osmdroid',                     name:  'osmdroid-android',                      version: OSM]
+    ]
 
     def jetpackCompose = [
             composeUI:                  [group: 'androidx.compose.ui',              name: 'ui',                                     version:COMPOSE],
@@ -152,8 +157,9 @@ ext {
             gson:                       [group: 'com.google.code.gson',         name: 'gson',    version:GSON],
     ]
 
-
-
+    openStreetMapImp = [
+            [configuration:  "implementation", dependency: openStreetMap.map]
+    ]
 
     kotlinLibImp = [
             [configuration: "implementation", dependency: kotlinLibrary.stdlib],

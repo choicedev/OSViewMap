@@ -1,4 +1,4 @@
-applicationPlugns.forEach{
+applicationPlugns.forEach {
     apply plugin: it
 }
 
@@ -72,18 +72,21 @@ kapt {
 }
 dependencies {
 
-    implementation("org.osmdroid:osmdroid-android:6.1.16")
 
     implementation project(path: ':design')
     implementation project(path: ':feature')
     implementation project(path: ':feature:splash')
     implementation project(path: ':feature:map')
 
-    kotlinLibImp.forEach{
+    openStreetMapImp.forEach {
         add(it.configuration, it.dependency)
     }
 
-    jetpackComposeImp.forEach{
+    kotlinLibImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
+    jetpackComposeImp.forEach {
         add(it.configuration, it.dependency)
     }
 
