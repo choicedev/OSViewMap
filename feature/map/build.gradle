@@ -35,6 +35,7 @@ dependencies {
 
     implementation project(path: ':design')
     implementation project(path: ':feature')
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     openStreetMapImp.forEach {
         add(it.configuration, it.dependency)
