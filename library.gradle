@@ -28,7 +28,7 @@ ext {
     COMPOSE_ICON = '1.2.1'
     COMPOSE_TEST = '1.2.1'
     def COIL = '2.2.2'
-    MATERIAL3 = '1.0.1'
+    MATERIAL3 = '1.1.0-alpha06'
     COMPOSE_COMPILER = '1.4.0'
     def ACCOMPANIST = '0.28.0'
     def COMPOSE_RUNTIME = '1.3.3'
@@ -97,6 +97,7 @@ ext {
             placeMaterial:              [group: 'com.google.accompanist',           name: 'accompanist-placeholder-material',        version:ACCOMPANIST],
             placeHolder:                [group: 'com.google.accompanist',           name: 'accompanist-placeholder',                 version:ACCOMPANIST],
             swipeRefresh:               [group: 'com.google.accompanist',           name: 'accompanist-swiperefresh',                version:ACCOMPANIST],
+            permission:                 [group: 'com.google.accompanist',           name: 'accompanist-permissions',                 version:ACCOMPANIST],
     ]
 
 
@@ -238,7 +239,8 @@ ext {
             [configuration: "implementation", dependency: accompanist.placeHolder],
             [configuration: "implementation", dependency: accompanist.swipeRefresh],
             [configuration: "implementation", dependency: accompanist.placeMaterial],
-            [configuration: "implementation", dependency: accompanist.systemUI]
+            [configuration: "implementation", dependency: accompanist.systemUI],
+            [configuration: "implementation", dependency: accompanist.permission]
     ]
 
     dataStoreImp = [

@@ -5,7 +5,9 @@ daggerPlugins.forEach{
 android {
     compileSdk compileAppSdk
     namespace 'com.choice.map'
-
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -32,6 +34,15 @@ kapt {
     correctErrorTypes = true
 }
 dependencies {
+
+    implementation project(path: ':core')
+    implementation project(path: ':design')
+    implementation project(path: ':feature')
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    openStreetMapImp.forEach {
+        add(it.configuration, it.dependency)
+    }
 
     kotlinLibImp.forEach{
         add(it.configuration, it.dependency)

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StreetMap</string>
+    <string name="get_permission_location">To improve your experience and provide you with more accurate information, we would like to ask your permission to access your cell phone location. This will help us provide more relevant results based on your current location.</string>
+    <string name="enable_localization">Enable Localization</string>
+</resources>
