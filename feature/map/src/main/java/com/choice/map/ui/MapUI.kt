@@ -1,37 +1,38 @@
 package com.choice.map.ui
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
-import android.preference.PreferenceManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.widget.Toast
-import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityCompat
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.scaleMatrix
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.airbnb.lottie.LottieDrawable
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.choice.core.extension.getCurrentLocation
 import com.choice.design.component.MapScaffold
+import com.choice.design.component.rememberLifecycleObserver
 import com.choice.map.MapViewModel
+import com.choice.map.R
 import com.choice.map.ui.composable.BottomSheetCheckPermission
 import com.choice.map.ui.composable.MapView
-import com.google.android.gms.location.LocationServices
-import kotlinx.coroutines.delay
-import org.osmdroid.config.Configuration
+import com.choice.map.ui.composable.getLottieIconForUser
+import com.choice.map.util.MapConfig
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
@@ -41,35 +42,27 @@ fun MapUI(navHostController: NavHostController) {
 
     val viewModel: MapViewModel = hiltViewModel()
 
-   var showSheet by rememberSaveable {
-        mutableStateOf(false)
-    }
-    val context = LocalContext.current
-
     var mapView: MapView? by remember {
         mutableStateOf(null)
     }
 
-    if(showSheet){
-        BottomSheetCheckPermission(
-            onDismiss = {
-                showSheet = false
-            },
-            onGranted = {
-                showSheet = false
-                getCurrentLocation(context){ lat, long ->
-                    val point = GeoPoint(lat, long)
-                    val mark = Marker(mapView)
-                    mapView?.overlays?.clear()
-                    mark.position = point
-                    mapView?.controller?.setCenter(point)
-                    mapView?.controller?.animateTo(point, 20.0, 15L)
-                    mapView?.overlays?.add(mark)
-                }
-
-             }
-        )
+    var mark: Marker? by remember {
+        mutableStateOf(null)
     }
+
+    val context = LocalContext.current
+
+
+    CheckPermission(onSuccess = { lat, long ->
+        val point = GeoPoint(lat, long)
+        mapView?.overlays?.clear()
+        mark?.position = point
+        mark!!.icon = ResourcesCompat.getDrawable(context.resources, R.drawable.base_circle_border, null)
+        mapView?.controller?.setCenter(point)
+        mapView?.controller?.animateTo(point, 18.0, 1500L)
+        mapView?.overlays?.add(mark)
+    })
+
     MapScaffold(
         navController = navHostController,
         navigation = viewModel.navigate
@@ -80,24 +73,11 @@ fun MapUI(navHostController: NavHostController) {
             .padding(it)){
 
             MapView(Modifier.fillMaxSize()) { mapViews ->
-
                 mapView = mapViews
-                val point = GeoPoint(-23.72449, -46.53960)
-                val mark = Marker(mapView)
-                mark.position = point
-                mapViews.controller.setCenter(point)
-                mapViews.controller.animateTo(point, 15.0, 5L)
-                mapViews.overlays.add(mark)
-
-
-            }
-
-            Button(modifier = Modifier.align(Alignment.TopCenter),onClick = {
-                showSheet = true
-            }) {
-                Text(
-                    text = "Localização Atual"
-                )
+                mark = Marker(mapView)
+                val point = GeoPoint(0, 0)
+                mapViews.controller.setCenter(MapConfig.defaultCoords)
+                mapViews.controller.animateTo(point, 4.0, 5L)
             }
         }
 
@@ -105,28 +85,42 @@ fun MapUI(navHostController: NavHostController) {
 
 }
 
+@Composable
+private fun CheckPermission(
+    onSuccess: (lat: Double, long: Double) -> Unit
+) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val lifecycle = lifecycleOwner.lifecycle
 
-private fun getCurrentLocation(context: Context, callback: (Double, Double) -> Unit) {
-    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-    if (ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED
-    ) {
-        return
+    var showSheet by remember {
+        mutableStateOf(false)
     }
-    fusedLocationClient.lastLocation
-        .addOnSuccessListener { location ->
-            if (location != null) {
-                val lat = location.latitude
-                val long = location.longitude
-                callback(lat, long)
+
+    LaunchedEffect(key1 = Unit) {
+        showSheet = true
+    }
+
+
+    if (showSheet) {
+        BottomSheetCheckPermission(
+            onGranted = {
+                showSheet = false
+                context.getCurrentLocation(
+                    permissionFailed = {
+                        Toast.makeText(context, "Not accept", Toast.LENGTH_LONG).show()
+                    },
+                    isSuccess = { lat, long ->
+                        onSuccess(lat, long)
+                    },
+                    isFailure = { throwable ->
+                        Toast.makeText(context, throwable.message ?: "", Toast.LENGTH_LONG).show()
+                    }
+                )
+            },
+            onDismiss = {
+                showSheet = false
             }
-        }
-        .addOnFailureListener { exception ->
-            exception.printStackTrace()
-        }
+        )
+    }
 }

@@ -1,13 +1,10 @@
-daggerPlugins.forEach{
+ktPlugins.forEach{
     apply plugin: it
 }
 
 android {
     compileSdk compileAppSdk
-    namespace 'com.choice.map'
-    defaultConfig {
-        vectorDrawables.useSupportLibrary = true
-    }
+    namespace 'com.choice.core'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -18,12 +15,6 @@ android {
         jvmTarget = '17'
     }
 
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion COMPOSE_COMPILER
-    }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -35,24 +26,9 @@ kapt {
 }
 dependencies {
 
-    implementation project(path: ':core')
-    implementation project(path: ':design')
-    implementation project(path: ':feature')
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
-    openStreetMapImp.forEach {
-        add(it.configuration, it.dependency)
-    }
-
     kotlinLibImp.forEach{
-        add(it.configuration, it.dependency)
-    }
-
-    jetpackComposeImp.forEach{
-        add(it.configuration, it.dependency)
-    }
-
-    daggerAndroidImp.forEach {
         add(it.configuration, it.dependency)
     }
 
@@ -69,10 +45,6 @@ dependencies {
     }
 
     workerImp.forEach {
-        add(it.configuration, it.dependency)
-    }
-
-    accompanistImp.forEach {
         add(it.configuration, it.dependency)
     }
 

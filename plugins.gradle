@@ -1,6 +1,6 @@
 ext {
-    defaultPlugins = [
-            'com.android.application',
+    ktPlugins = [
+            'com.android.library',
             'kotlin-android',
             'kotlin-kapt'
     ]

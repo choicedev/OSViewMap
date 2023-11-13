@@ -10,6 +10,6 @@ class MapViewModel @Inject constructor(
     appNavigation: AppNavigator
 ): BaseViewModel<Unit, Unit>(Unit, appNavigation) {
     override fun onEvent(event: Unit) {
-        TODO("Not yet implemented")
+
     }
 }
