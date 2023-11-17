@@ -6,6 +6,7 @@ ext {
     def COROUTINES_KT = "1.3.3"
 
 
+    def LIFECYCLE_COMPOSE = '2.6.0'
     def LIFECYCLE = '2.2.0'
     def LIFECYCLE_2 = '2.5.1'
 
@@ -58,11 +59,13 @@ ext {
 
     //OpenStreetMap
     def OSM = '6.1.16'
+    def OSMPACK = '6.9.0'
 
 
 
     def openStreetMap = [
-            map:                        [group: 'org.osmdroid',                     name:  'osmdroid-android',                      version: OSM]
+            map:                        [group: 'org.osmdroid',                     name:  'osmdroid-android',                      version: OSM],
+            mapBonusPack:               [group: 'com.github.mkergall',              name:  'osmbonuspack',                          version: OSMPACK]
     ]
 
     def jetpackCompose = [
@@ -108,6 +111,7 @@ ext {
     ]
 
     def lifeCycler = [
+            lifecycleCompose:         [group: 'androidx.lifecycle',           name: 'lifecycle-runtime-compose',                    version:LIFECYCLE_COMPOSE],
             lifecycleExtension:       [group: 'androidx.lifecycle',           name: 'lifecycle-extensions',                         version:LIFECYCLE],
             liveDataKtx:              [group: 'androidx.lifecycle',           name: 'lifecycle-livedata-ktx',                       version:LIFECYCLE_2],
             savedState:               [group: 'androidx.lifecycle',           name: 'lifecycle-viewmodel-savedstate',               version:LIFECYCLE_2],
@@ -161,7 +165,8 @@ ext {
     ]
 
     openStreetMapImp = [
-            [configuration:  "implementation", dependency: openStreetMap.map]
+            [configuration:  "implementation", dependency: openStreetMap.map],
+            [configuration:  "implementation", dependency: openStreetMap.mapBonusPack]
     ]
 
     kotlinLibImp = [
@@ -251,7 +256,8 @@ ext {
     lifeCycleImp = [
             [configuration: "implementation", dependency: lifeCycler.lifecycleExtension],
             [configuration: "implementation", dependency: lifeCycler.liveDataKtx],
-            [configuration: "implementation", dependency: lifeCycler.savedState]
+            [configuration: "implementation", dependency: lifeCycler.savedState],
+            [configuration: "implementation", dependency: lifeCycler.lifecycleCompose]
     ]
 
     //nao utilizado

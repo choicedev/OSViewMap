@@ -10,9 +10,9 @@ import com.google.android.gms.location.LocationServices
     Get current location from user
 */
 fun Context.getCurrentLocation(
-    permissionFailed: (() -> Unit?)? = null,
-    isSuccess: (lat: Double, long: Double) -> Unit,
-    isFailure: (Throwable) -> Unit
+    permissionFailed: () -> Unit = {},
+    onSuccess: (lat: Double, long: Double) -> Unit,
+    onFailure: (Throwable) -> Unit
 ) {
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     if (ActivityCompat.checkSelfPermission(
@@ -23,7 +23,7 @@ fun Context.getCurrentLocation(
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
     ) {
-        permissionFailed?.invoke()
+        permissionFailed()
         return
     }
     fusedLocationClient.lastLocation
@@ -31,10 +31,10 @@ fun Context.getCurrentLocation(
             if (location != null) {
                 val lat = location.latitude
                 val long = location.longitude
-                isSuccess(lat, long)
+                onSuccess(lat, long)
             }
         }
         .addOnFailureListener { exception ->
-            isFailure(exception)
+            onFailure(exception)
         }
 }

@@ -40,7 +40,7 @@ dependencies {
     implementation project(path: ':feature')
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
-    openStreetMapImp.forEach {
+    openStreetMapImp.forEach{
         add(it.configuration, it.dependency)
     }
 
@@ -49,6 +49,10 @@ dependencies {
     }
 
     jetpackComposeImp.forEach{
+        add(it.configuration, it.dependency)
+    }
+
+    lifeCycleImp.forEach{
         add(it.configuration, it.dependency)
     }
 
