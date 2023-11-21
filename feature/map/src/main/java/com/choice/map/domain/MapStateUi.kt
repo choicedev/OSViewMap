@@ -5,8 +5,8 @@ import org.osmdroid.util.GeoPoint
 sealed class MapStateUi {
 
     object LOADING : MapStateUi()
-    object REQUEST_PERMISSION : MapStateUi()
-    data class MAPVIEW(val lat: Double, val long: Double) : MapStateUi(){
+    object RequestPermission : MapStateUi()
+    data class LocationMarker(val lat: Double = 0.0, val long: Double = 0.0) : MapStateUi(){
         val currentLocationUser = GeoPoint(
             lat,
             long

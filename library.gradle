@@ -58,7 +58,7 @@ ext {
     def TEST_CORE = '2.1.0'
 
     //OpenStreetMap
-    def OSM = '6.1.16'
+    def OSM = '6.1.17'
     def OSMPACK = '6.9.0'
 
 

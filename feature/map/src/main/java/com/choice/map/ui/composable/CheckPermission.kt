@@ -3,8 +3,6 @@ package com.choice.map.ui.composable
 import android.Manifest
 import android.Manifest.*
 import android.Manifest.permission.*
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,21 +23,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.choice.core.extension.getCurrentLocation
 import com.choice.core.extension.openSettings
 import com.choice.design.theme.MapTheme
 import com.choice.map.MapViewModel
 import com.choice.map.R
 import com.choice.map.domain.MapEvent
 import com.choice.map.domain.MapStateUi
-import com.choice.map.util.updateMarkerAndMap
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.MultiplePermissionsState
-import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.google.accompanist.permissions.shouldShowRationale
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
 
 val permissionList = listOf(
     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -86,7 +77,7 @@ fun RequestPermissionUI(
             onClick = {
 
                 if(multiplePermission.allPermissionsGranted){
-                    viewModel.onEvent(MapEvent.CHANGE_SCREEN(MapStateUi.LOADING))
+                    viewModel.onEvent(MapEvent.ChangeState(MapStateUi.LOADING))
                 }
 
                 if(!multiplePermission.allPermissionsGranted && !multiplePermission.shouldShowRationale){

@@ -11,33 +11,35 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.choice.design.component.map.config.MapConfig
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 
 
 @Composable
 fun MapView(
     modifier: Modifier = Modifier,
-    onLoad: ((map: MapView) -> Unit)? = null
+    onLoad: (map: MapView) -> Unit
 ) {
-    val mapViewState = rememberMapView()
-    val context = LocalContext.current
+    val mapViewState = mapViewUI()
 
     AndroidView(
-        { mapViewState },
-        modifier
-    ) { mapView -> onLoad?.invoke(mapView)
-    }
+        modifier = modifier,
+        factory = { mapViewState },
+        update = onLoad
+    )
 }
 
 @Composable
-fun rememberMapView(): MapView {
+private fun mapViewUI(): MapView {
     val context = LocalContext.current
     val mapView = remember {
         MapView(context).apply {
             setTileSource(TileSourceFactory.MAPNIK)
             setMultiTouchControls(true)
+            setBuiltInZoomControls(false)
             maxZoomLevel = MapConfig.zoom.max
             minZoomLevel = MapConfig.zoom.min
+            this.controller.setCenter(GeoPoint(0.0, 0.0))
         }
     }
 
