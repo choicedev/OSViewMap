@@ -1,5 +1,8 @@
 package com.choice.splah.ui
 
+import android.Manifest
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
@@ -29,8 +32,12 @@ import com.choice.feature.navigation.Destination
 import com.choice.splah.SplashViewModel
 import com.choice.splash.BuildConfig
 import com.choice.splash.R
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.delay
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun SplashUI(navHostController: NavHostController) {
     val viewModel: SplashViewModel = hiltViewModel()
@@ -38,7 +45,14 @@ fun SplashUI(navHostController: NavHostController) {
     var visible by remember {
         mutableStateOf(false)
     }
-    LaunchedEffect(key1 = Unit){
+
+    val notificationPermission =
+        rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
+
+
+
+    LaunchedEffect(key1 = Unit) {
+        notificationPermission.launchPermissionRequest()
         delay(300)
         visible = !visible
         delay(3000)

@@ -26,6 +26,7 @@ fun Context.getCurrentLocation(
         permissionFailed()
         return
     }
+
     fusedLocationClient.lastLocation
         .addOnSuccessListener { location ->
             if (location != null) {

@@ -15,7 +15,7 @@ ext {
             'kotlin-android',
             'kotlin-kapt',
             'com.android.library',
-            'dagger.hilt.android.plugin',
+            'dagger.hilt.android.plugin'
     ]
 
 

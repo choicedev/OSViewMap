@@ -1,5 +1,6 @@
 package com.choice.map.ui.composable
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -45,14 +46,6 @@ fun MyLocationBottomSheet(
         ) {
 
             Button(onClick = {
-
-                locationMarker.home?.copy(
-                    latitude = locationMarker.user?.latitude ?: 0.0,
-                    longitude = locationMarker.user?.longitude ?: 0.0
-                )?.updateMarker(locationMarker.mapView!!)
-                scope.launch {
-                    sheetState.hide()
-                }
 
             }) {
 
