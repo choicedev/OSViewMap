@@ -2,13 +2,19 @@ package com.choice.map.ui
 
 import android.content.Context
 import android.content.Intent
+import android.view.DragEvent
+import android.view.MotionEvent
+import android.view.View
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationSearching
 import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +45,9 @@ import com.choice.map.domain.MarkerInfo
 import com.choice.map.ui.composable.MapFloatingAction
 import com.choice.map.util.MarkerID
 import com.choice.map.util.extension.defaultAnimation
+import org.osmdroid.events.MapListener
+import org.osmdroid.events.ScrollEvent
+import org.osmdroid.events.ZoomEvent
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
@@ -67,6 +76,15 @@ fun MapUI(navHostController: NavHostController) {
                     viewModel.onEvent(MapEvent.ChangeState(MapStateUi.RequestPermission))
                 },
                 onSuccess = { lat, long ->
+                    viewModel.onEvent(
+                        MapEvent.ChangeState(
+                            MapStateUi.LocationMarker(
+                                lat,
+                                long
+                            )
+                        )
+                    )
+
                     locationMarker = LocationMarker(
                         mapView = mapView,
                         user = MarkerInfo(
@@ -92,17 +110,13 @@ fun MapUI(navHostController: NavHostController) {
 
         }
     )
-    val tracking = TrackingService.LatLong.collectAsStateWithLifecycle()
-    LaunchedEffect(key1 = tracking.value){
-        locationMarker.user?.copy(
-            latitude = tracking.value.first,
-            longitude = tracking.value.second
-        )?.updateMarker(mapView!!) { controller, info ->
-            controller.defaultAnimation(info.position)
-        }
+
+
+    var trackingUser by remember {
+        mutableStateOf(false)
     }
 
-
+    val snackBar = SnackbarHostState()
 
     MapScaffold(
         navController = navHostController,
@@ -120,6 +134,7 @@ fun MapUI(navHostController: NavHostController) {
                             )
                         )
                     )
+
                     locationMarker.user?.copy(
                         latitude = lat,
                         longitude = long
@@ -140,26 +155,32 @@ fun MapUI(navHostController: NavHostController) {
             MapView(Modifier.fillMaxSize()) { mView ->
                 mapView = mView
                 locationMarker.mapView = mView
+
             }
 
-
-            IconButton(
+            FilledIconButton(
                 modifier = Modifier.align(Alignment.CenterEnd),
                 onClick = {
-                    if(!TrackingService.isTracking.value){
-                        context.sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
-                    }else{
-                        context.sendCommandToService(ACTION_STOP_SERVICE)
-                    }
+                    trackingUser = !trackingUser
                 }) {
-                Icon(
-                    imageVector = Icons.Filled.MyLocation,
-                    contentDescription = null
-                )
+                val icon =
+                    if (trackingUser) Icons.Filled.MyLocation else Icons.Filled.LocationSearching
+                Icon(imageVector = icon, contentDescription = null)
             }
 
-
         }
+    }
+
+    ForegroundLocationTracker {
+        mapView?.let { mapView ->
+            locationMarker.user?.copy(
+                latitude = it.latitude,
+                longitude = it.longitude
+            )?.updateMarker(mapView) { controller, info ->
+                if (trackingUser) controller.defaultAnimation(info.position) else mapView.postInvalidate()
+            }
+        }
+
     }
 
 
@@ -168,14 +189,7 @@ fun MapUI(navHostController: NavHostController) {
     }
 }
 
-fun Context.sendCommandToService(action: String) {
 
-    Intent(this, TrackingService::class.java).also {
-        it.action = action
-        this.startService(it)
-    }
-
-}
 
 
 

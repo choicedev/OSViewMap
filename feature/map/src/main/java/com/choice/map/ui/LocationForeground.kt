@@ -91,32 +91,13 @@ sealed interface LocationPermissionsState {
     }
 }
 
-private suspend fun requestToEnableGPS(context: Context, snackbarHostState: SnackbarHostState) {
+private suspend fun requestToEnableGPS(context: Context) {
     val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
     val canNavigateToGPSSettings =
         intent.resolveActivity(context.packageManager) != null
 
-    val result = snackbarHostState.showSnackbar(
-        message = "GPS is disabled",
-        actionLabel = if (!canNavigateToGPSSettings) {
-            null
-        } else {
-            "ENABLE"
-        },
-        withDismissAction = true,
-        duration = SnackbarDuration.Indefinite,
-    )
-
-    when (result) {
-        SnackbarResult.Dismissed -> {
-
-        }
-
-        SnackbarResult.ActionPerformed -> {
-            if (canNavigateToGPSSettings) {
-                context.startActivity(intent)
-            }
-        }
+    if (canNavigateToGPSSettings) {
+        context.startActivity(intent)
     }
 }
 
@@ -133,12 +114,6 @@ fun isGPSEnabled(context: Context): Boolean {
 @SuppressLint("MissingPermission")
 @Composable
 fun ForegroundLocationTracker(
-    /**
-     * Will be used to show a prompt for enabling GPS if it is disabled
-     * or requesting location permissions if non has been granted.
-     */
-    snackbarHostState: SnackbarHostState,
-    permissionsState: LocationPermissionsState = LocationPermissionsState.CoarseAndFine,
     onLocationUpdates: (Location) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -147,8 +122,6 @@ fun ForegroundLocationTracker(
     val fusedLocationProviderClient = remember {
         LocationServices.getFusedLocationProviderClient(context)
     }
-
-    val permissions = permissionsState()
 
     var isGPSEnabled by remember {
         mutableStateOf(isGPSEnabled(context))
@@ -163,44 +136,11 @@ fun ForegroundLocationTracker(
 
     DisposableEffect(
         isGPSEnabled,
-        permissions.shouldShowRationale,
-        permissions.allPermissionsGranted,
     ) {
-        if (!permissions.allPermissionsGranted || permissions.shouldShowRationale) {
-            scope.launch {
-                val result = snackbarHostState.showSnackbar(
-                    "Missing required permissions",
-                    "Grant",
-                    withDismissAction = true,
-                    duration = SnackbarDuration.Indefinite,
-                )
-
-                when (result) {
-                    SnackbarResult.Dismissed -> {
-
-                    }
-
-                    SnackbarResult.ActionPerformed -> {
-                        permissions.launchMultiplePermissionRequest()
-                    }
-                }
-            }
-            return@DisposableEffect SimulatedDisposableEffectResult
-        }
-
-        if (!isGPSEnabled) {
-            scope.launch {
-                requestToEnableGPS(
-                    context = context,
-                    snackbarHostState = snackbarHostState,
-                )
-            }
-            return@DisposableEffect SimulatedDisposableEffectResult
-        }
 
         val locationRequest = LocationRequest.Builder(
             Priority.PRIORITY_HIGH_ACCURACY,
-            10000L,
+            1000L,
         ).build()
 
         val locationCallback = object : LocationCallback() {
@@ -211,16 +151,15 @@ fun ForegroundLocationTracker(
 
                 scope.launch {
                     requestToEnableGPS(
-                        context = context,
-                        snackbarHostState = snackbarHostState,
+                        context = context
                     )
                 }
             }
 
             override fun onLocationResult(p0: LocationResult) {
                 super.onLocationResult(p0)
-                p0.lastLocation?.also(onLocationUpdates)?.also {
-                    Log.i(TAG, "Current location: $it")
+                p0.lastLocation?.also {
+                    onLocationUpdates(it)
                 }
             }
         }

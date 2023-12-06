@@ -15,7 +15,5 @@ fun IMapController.defaultAnimation(
 ){
 
     this.animateTo(geoPoint, MapConfig.zoom.animation, 2500L)
-    center?.let {
-        this.setCenter(it)
-    }
+    this.stopPanning()
 }
