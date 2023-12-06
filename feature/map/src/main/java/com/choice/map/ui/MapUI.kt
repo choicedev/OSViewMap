@@ -135,6 +135,19 @@ fun MapUI(navHostController: NavHostController) {
                         )
                     )
 
+                    if(locationMarker.user == null){
+                        locationMarker = LocationMarker(
+                            mapView = mapView,
+                            user = MarkerInfo(
+                                latitude = lat,
+                                longitude = long,
+                                id = MarkerID.USER_LOCATION,
+                                marker = Marker(mapView),
+                                icon = context.getUserIcon(),
+                            ),
+                        )
+                    }
+
                     locationMarker.user?.copy(
                         latitude = lat,
                         longitude = long
@@ -172,6 +185,7 @@ fun MapUI(navHostController: NavHostController) {
     }
 
     ForegroundLocationTracker {
+
         mapView?.let { mapView ->
             locationMarker.user?.copy(
                 latitude = it.latitude,
