@@ -36,6 +36,18 @@ dependencies {
         add(it.configuration, it.dependency)
     }
 
+    jetpackComposeImp.forEach{
+        add(it.configuration, it.dependency)
+    }
+
+    lifeCycleImp.forEach{
+        add(it.configuration, it.dependency)
+    }
+
+    accompanistImp.forEach {
+        add(it.configuration, it.dependency)
+    }
+
     daggerAndroidImp.forEach {
         add(it.configuration, it.dependency)
     }

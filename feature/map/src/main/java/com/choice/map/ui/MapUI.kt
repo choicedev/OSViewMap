@@ -116,6 +116,17 @@ fun MapUI(navHostController: NavHostController) {
         mutableStateOf(false)
     }
 
+    LaunchedEffect(key1 = state.LatLong){
+        mapView?.let { mapView ->
+            locationMarker.user?.copy(
+                latitude = state.LatLong.first,
+                longitude = state.LatLong.second
+            )?.updateMarker(mapView) { controller, info ->
+                if (trackingUser) controller.defaultAnimation(info.position) else mapView.postInvalidate()
+            }
+        }
+    }
+
     val snackBar = SnackbarHostState()
 
     MapScaffold(
@@ -174,7 +185,14 @@ fun MapUI(navHostController: NavHostController) {
             FilledIconButton(
                 modifier = Modifier.align(Alignment.CenterEnd),
                 onClick = {
-                    trackingUser = !trackingUser
+
+                    if(!trackingUser){
+                        trackingUser = true
+                        context.sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+                        return@FilledIconButton
+                    }
+                    trackingUser = false
+                    context.sendCommandToService(ACTION_STOP_SERVICE)
                 }) {
                 val icon =
                     if (trackingUser) Icons.Filled.MyLocation else Icons.Filled.LocationSearching
@@ -184,7 +202,7 @@ fun MapUI(navHostController: NavHostController) {
         }
     }
 
-    ForegroundLocationTracker {
+/*    ForegroundLocationTracker {
 
         mapView?.let { mapView ->
             locationMarker.user?.copy(
@@ -195,12 +213,21 @@ fun MapUI(navHostController: NavHostController) {
             }
         }
 
-    }
+    }*/
 
 
     DisposableEffect(lifecycleObserver) {
         onDispose { lifecycle.removeObserver(lifecycleObserver) }
     }
+}
+
+fun Context.sendCommandToService(action: String) {
+
+    Intent(this, TrackingService::class.java).also {
+        it.action = action
+        this.startService(it)
+    }
+
 }
 
 
